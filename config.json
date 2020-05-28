@@ -1,6 +1,17 @@
 {
-  "api_root": "http://127.0.0.1:8000",
   "endpoints": {
-    "gps_footprint": "api/gps-footprint/"
+    "root": "http://127.0.0.1:8000",
+    "api": {
+      "gps_footprint": "gps-footprint/",
+      "device": "device/"
+    },
+    "auth": {
+      "obtain_token": "token/",
+      "refresh_token": "token/refresh/"
+    }
+  },
+  "auth": {
+    "access_token_lifetime": 3600,
+    "refresh_token_lifetime": 86400
   }
 }
