@@ -4,8 +4,15 @@ import os
 CONFIG_NAME = 'config.json'
 
 
-def parse_config():
+def get_config_path():
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    config_path = os.path.join(root_path, CONFIG_NAME)
-    with open(config_path, 'r') as config_file:
-        return json.load(config_file)
+    return os.path.join(root_path, CONFIG_NAME)
+
+
+def parse_config():
+    config_path = get_config_path()
+    try:
+        with open(config_path, 'r') as config_file:
+            return json.load(config_file)
+    except FileNotFoundError:
+        return {}

@@ -9,9 +9,5 @@
       "obtain_token": "token/",
       "refresh_token": "token/refresh/"
     }
-  },
-  "auth": {
-    "access_token_lifetime": 3600,
-    "refresh_token_lifetime": 86400
   }
 }
