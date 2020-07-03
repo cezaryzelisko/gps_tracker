@@ -16,3 +16,12 @@ def parse_config():
             return json.load(config_file)
     except FileNotFoundError:
         return {}
+
+
+def update_config(updated_config):
+    config_path = get_config_path()
+    try:
+        with open(config_path, 'w') as config_file:
+            json.dump(updated_config, config_file, indent=2)
+    except FileNotFoundError:
+        print(f'{CONFIG_NAME} file does not exist')

@@ -1,6 +1,7 @@
 import unittest
 from unittest import mock
 
+from gps_tracker.tests.utils import set_up_mock_post
 from gps_tracker.utils import api_requests
 
 
@@ -11,13 +12,7 @@ class TestApiRequests(unittest.TestCase):
 
     @mock.patch('gps_tracker.utils.api_requests.requests.post')
     def test_can_obtain_token(self, mock_post):
-        mock_post.return_value.status_code = 200
-        mock_post.return_value.json.return_value = {
-            'access': 'access_token',
-            'refresh': 'refresh_token',
-            'accessExpiresAt': 1593687701,
-            'refreshExpiresAt': 1593687901
-        }
+        set_up_mock_post(mock_post)
 
         status_code, data = api_requests.obtain_token('test_user', 'test_password')
 

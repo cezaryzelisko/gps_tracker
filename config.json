@@ -9,5 +9,8 @@
       "obtain_token": "token/",
       "refresh_token": "token/refresh/"
     }
+  },
+  "device": {
+    "id": 1
   }
 }

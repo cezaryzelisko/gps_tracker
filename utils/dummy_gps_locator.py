@@ -1,13 +1,17 @@
 import time
 from argparse import ArgumentParser
 
+from gps_tracker.auth import Auth
+from gps_tracker.device import Device
 from gps_tracker.gps_locator import RandomGPSLocator
-
-DEVICE_ID = 1
 
 
 def run_main_loop(interval):
-    gps_locator = RandomGPSLocator(DEVICE_ID)
+    auth = Auth()
+    device = Device('Random Device', auth)
+    gps_locator = RandomGPSLocator(device.id, auth)
+
+    print(f"Device: #{device.id} - '{device.name}' started!")
 
     try:
         while True:

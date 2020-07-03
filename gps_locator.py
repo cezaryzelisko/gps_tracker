@@ -1,17 +1,15 @@
 import datetime
 import random
 
-from gps_tracker.auth import Auth
 from gps_tracker.utils.api_requests import post
 
 
 class GPSLocator:
     STARTING_COORDS = (51.005, 21.001)
 
-    def __init__(self, device_id):
+    def __init__(self, device_id, auth):
         self.device_id = device_id
-        self.auth = Auth()
-        self.headers = self.auth.get_authorization_header()
+        self.headers = auth.get_authorization_header()
         self.last_coords = self.STARTING_COORDS
 
     def get_new_coords(self, abs_diff=0.01):
