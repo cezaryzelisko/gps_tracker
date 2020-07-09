@@ -1,6 +1,6 @@
 {
   "endpoints": {
-    "root": "http://127.0.0.1:8000",
+    "root": "http://192.168.1.102:8000",
     "api": {
       "gps_footprint": "gps-footprint/",
       "device": "device/"
