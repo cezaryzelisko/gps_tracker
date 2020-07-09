@@ -13,3 +13,10 @@ def set_up_mock_auth_post(mock_post):
     }
 
     return mock_post
+
+
+def set_up_mock_credentials(mock_credentials):
+    mock_credentials.return_value = {
+        'username': 'test_user',
+        'password': 'test_password'
+    }

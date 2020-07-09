@@ -3,16 +3,18 @@ from unittest import mock
 
 from gps_tracker.auth import Auth
 from gps_tracker.gps_locator import RandomGPSLocator
-from gps_tracker.tests.utils import set_up_mock_auth_post
+from gps_tracker.tests.utils import set_up_mock_auth_post, set_up_mock_credentials
 
 
 class GPSLocatorTests(unittest.TestCase):
     DEVICE_ID = 1
 
     @classmethod
+    @mock.patch('gps_tracker.auth.Auth.parse_credentials')
     @mock.patch('gps_tracker.utils.api_requests.requests.post')
-    def setUpClass(cls, mock_post):
+    def setUpClass(cls, mock_post, mock_credentials):
         set_up_mock_auth_post(mock_post)
+        set_up_mock_credentials(mock_credentials)
         cls.auth = Auth()
 
     def test_can_form_authorization_headers(self):
