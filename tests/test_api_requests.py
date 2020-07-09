@@ -6,7 +6,14 @@ from gps_tracker.utils import api_requests
 
 
 class ApiRequestsTests(unittest.TestCase):
-    def test_can_get_url(self):
+    @mock.patch('gps_tracker.utils.api_requests.parse_config')
+    def test_can_get_url(self, mock_parser):
+        mock_parser.return_value = {
+            'endpoints': {
+                'root': 'http://127.0.0.1:8000',
+                'api': {'gps_footprint': 'gps-footprint/'}
+            }
+        }
         gps_footprint_url = api_requests.get_url('api', 'gps_footprint')
         self.assertEqual(gps_footprint_url, 'http://127.0.0.1:8000/api/gps-footprint/')
 
