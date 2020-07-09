@@ -1,7 +1,7 @@
 import datetime
 
 
-def set_up_mock_post(mock_post):
+def set_up_mock_auth_post(mock_post):
     access_timestamp = int(datetime.datetime.now().timestamp())
 
     mock_post.return_value.status_code = 200

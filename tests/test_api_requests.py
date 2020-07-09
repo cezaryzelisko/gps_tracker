@@ -1,18 +1,18 @@
 import unittest
 from unittest import mock
 
-from gps_tracker.tests.utils import set_up_mock_post
+from gps_tracker.tests.utils import set_up_mock_auth_post
 from gps_tracker.utils import api_requests
 
 
-class TestApiRequests(unittest.TestCase):
+class ApiRequestsTests(unittest.TestCase):
     def test_can_get_url(self):
         gps_footprint_url = api_requests.get_url('api', 'gps_footprint')
         self.assertEqual(gps_footprint_url, 'http://127.0.0.1:8000/api/gps-footprint/')
 
     @mock.patch('gps_tracker.utils.api_requests.requests.post')
     def test_can_obtain_token(self, mock_post):
-        set_up_mock_post(mock_post)
+        set_up_mock_auth_post(mock_post)
 
         status_code, data = api_requests.obtain_token('test_user', 'test_password')
 

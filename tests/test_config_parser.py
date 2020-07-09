@@ -4,7 +4,7 @@ import unittest
 from gps_tracker.utils import config_parser
 
 
-class TestConfigParser(unittest.TestCase):
+class ConfigParserTests(unittest.TestCase):
     def test_can_get_configuration_path(self):
         config_path = config_parser.get_config_path()
         root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
