@@ -7,7 +7,7 @@ email: cezary.zelisko@gmail.com
 ## Description
 GPS Tracker project consists of 3 subprojects:
 
-1. [this](https://github.com/cezaryzelisko/gps-tracker) repository - locator,
+1. [this](https://github.com/cezaryzelisko/gps_tracker) repository - locator,
 2. [RESTful API](https://github.com/cezaryzelisko/gps-tracker-api) that is responsible for
 handling requests from the locator (1.) and the mobile app (3.),
 3. [mobile app](https://github.com/cezaryzelisko/gps-tracker-mobile) that retrieves data
