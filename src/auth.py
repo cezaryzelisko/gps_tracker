@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime
 
-from .utils.api_requests import obtain_token, refresh_token
+from utils.api_requests import obtain_token, refresh_token
 
 
 class Auth:
