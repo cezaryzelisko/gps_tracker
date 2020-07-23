@@ -1,6 +1,6 @@
 import requests
 
-from .config_parser import parse_config
+from gps_tracker.utils.config_parser import parse_config
 
 SAFE_STATUS_CODES = [200, 201]
 

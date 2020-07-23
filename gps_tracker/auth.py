@@ -1,8 +1,8 @@
 import json
-import os
+import pkgutil
 from datetime import datetime
 
-from utils.api_requests import obtain_token, refresh_token
+from gps_tracker.utils.api_requests import obtain_token, refresh_token
 
 
 class Auth:
@@ -20,10 +20,8 @@ class Auth:
 
     @staticmethod
     def parse_credentials():
-        credentials_dir = os.path.dirname(os.path.abspath(__file__))
-        credentials_path = os.path.join(credentials_dir, 'credentials.json')
-        with open(credentials_path, 'r') as in_file:
-            return json.load(in_file)
+        raw_credentials = pkgutil.get_data('gps_tracker', '../credentials.json')
+        return json.loads(raw_credentials)
 
     def update_access_token(self):
         now = datetime.now()

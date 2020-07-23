@@ -1,9 +1,9 @@
 import time
 from argparse import ArgumentParser
 
-from src.auth import Auth
-from src.device import Device
-from src.gps_locator import RandomGPSLocator
+from gps_tracker.auth import Auth
+from gps_tracker.device import Device
+from gps_tracker.gps_locator import RandomGPSLocator
 
 
 def run_main_loop(interval):

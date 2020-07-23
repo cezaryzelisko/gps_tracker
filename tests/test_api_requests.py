@@ -1,8 +1,8 @@
 import unittest
 from unittest import mock
 
-from gps_tracker.tests.utils import set_up_mock_auth_post
 from gps_tracker.utils import api_requests
+from tests.utils import set_up_mock_auth_post
 
 
 class ApiRequestsTests(unittest.TestCase):

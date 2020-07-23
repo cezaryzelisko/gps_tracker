@@ -1,12 +1,12 @@
 import unittest
 from unittest import mock
 
-from gps_tracker.src.auth import Auth
-from gps_tracker.tests.utils import set_up_mock_auth_post, set_up_mock_credentials
+from gps_tracker.auth import Auth
+from tests.utils import set_up_mock_auth_post, set_up_mock_credentials
 
 
 class AuthTests(unittest.TestCase):
-    @mock.patch('gps_tracker.src.auth.Auth.parse_credentials')
+    @mock.patch('gps_tracker.auth.Auth.parse_credentials')
     @mock.patch('gps_tracker.utils.api_requests.requests.post')
     def test_can_get_authorization_header(self, mock_post, mock_credentials):
         set_up_mock_auth_post(mock_post)

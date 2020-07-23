@@ -1,9 +1,9 @@
 import time
 
 from RPi import GPIO
-from src.gps_locator import GPSLocator
-from src.serial_connection import SerialConnection
-from src.wave_share_config import WaveShareGPS
+from gps_tracker.gps_locator import GPSLocator
+from gps_tracker.serial_connection import SerialConnection
+from gps_tracker.wave_share_config import WaveShareGPS
 
 
 class WaveShareGPSLocator(GPSLocator):
