@@ -37,14 +37,11 @@ class SerialConnection:
             decoded_response = rec_buff.decode()
             if expected_response not in decoded_response:
                 error_msg = f"{command} ERROR, expected: '{expected_response}' but got: '{decoded_response}'"
-                print(error_msg)
                 return False, error_msg
             else:
-                print(decoded_response)
                 return True, decoded_response
 
         error_msg = 'Device is not ready'
-        print(error_msg)
         return False, error_msg
 
     def is_open(self):
