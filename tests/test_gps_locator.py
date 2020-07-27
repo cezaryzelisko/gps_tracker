@@ -25,20 +25,22 @@ class GPSLocatorTests(unittest.TestCase):
 
     def test_can_get_new_coordinates(self):
         gps_locator = RandomGPSLocator(self.DEVICE_ID, self.auth)
-        new_coords = gps_locator.get_new_coords()
+        new_location = gps_locator.get_new_location()
 
-        self.assertEqual(len(new_coords), 2)
-        self.assertGreaterEqual(new_coords[0], -90)
-        self.assertLessEqual(new_coords[0], 90)
-        self.assertGreaterEqual(new_coords[1], -180)
-        self.assertLessEqual(new_coords[1], 180)
+        self.assertIn('published_at', new_location)
+        self.assertIn('lat', new_location)
+        self.assertIn('lng', new_location)
+        self.assertGreaterEqual(new_location['lat'], -90)
+        self.assertLessEqual(new_location['lat'], 90)
+        self.assertGreaterEqual(new_location['lng'], -180)
+        self.assertLessEqual(new_location['lng'], 180)
 
     @mock.patch('gps_tracker.utils.api_requests.requests.post')
     def test_can_publish_new_coordinates(self, gps_mock_post):
         gps_locator = RandomGPSLocator(self.DEVICE_ID, self.auth)
 
         gps_mock_post.return_value.status_code = 201
-        _, status_code = gps_locator.publish_new_coords()
+        _, status_code = gps_locator.publish_new_location()
 
         self.assertEqual(status_code, 201)
 

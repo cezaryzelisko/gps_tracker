@@ -8,9 +8,8 @@ from gps_tracker.wave_share_config import WaveShareGPS
 
 class WaveShareGPSLocator(GPSLocator):
     def __init__(self, device_id, auth, serial_conn):
-        super().__init__(device_id, auth)
+        super().__init__(device_id, auth, (-1, -1))
         self.serial_conn = serial_conn
-        self.last_known_location = {'lat': -1, 'lng': -1, 'datetime': -1}
 
     def __enter__(self):
         self.power_on()
@@ -54,8 +53,8 @@ class WaveShareGPSLocator(GPSLocator):
 
         start = time.time()
         while (time.time() - start) < timeout:
-            coords = self.get_new_coords()
-            if coords == (-1, -1):
+            location = self.get_new_location()
+            if location['lat'] == -1 and location['lng'] == -1:
                 print('Waiting for GPS to initialize...')
             else:
                 print('GPS initialized')
@@ -64,7 +63,7 @@ class WaveShareGPSLocator(GPSLocator):
         print('GPS is not ready')
         return False
 
-    def get_new_coords(self):
+    def get_new_location(self):
         res_status, res_msg = self.serial_conn.send_at(
             WaveShareGPS.GPS_INFORMATION_CMD,
             WaveShareGPS.GPS_INFORMATION_CMD_RESPONSE,
@@ -73,22 +72,19 @@ class WaveShareGPSLocator(GPSLocator):
         if res_status:
             if ',,,,,,' in res_msg:
                 print('ERROR:\tGPS is not ready')
-                return -1, -1
+                return self.format_last_known_location_dict(-1, -1)
             datetime_str, lat, lng = self.parse_gps_information(res_msg)
-            self.set_last_known_location(datetime_str, lat, lng)
-            return lat, lng
+            return self.format_last_known_location_dict(lat, lng)
         else:
             print(f'ERROR:\t{res_msg}')
-            return -1, -1
-    
-    def parse_gps_information(self, information):
+            return self.format_last_known_location_dict(-1, -1)
+
+    @staticmethod
+    def parse_gps_information(information):
         gps_info_parts = information.split(',', 5)
         datetime_str, lat, lng = gps_info_parts[2:5]
-        
+
         return datetime_str, lat, lng
-    
-    def set_last_known_location(self, datetime, lat, lng):
-        self.last_known_location = {'datetime': datetime, 'lat': lat, 'lng': lng}
 
 
 # Note: this sample code will work only if you disable authentication in GPSLocator base class!
@@ -97,5 +93,5 @@ if __name__ == '__main__':
         with WaveShareGPSLocator(1, None, serial_conn) as ws_gps:
             enabled = ws_gps.wait_for_gps()
             if enabled:
-                lat, lng = ws_gps.get_new_coords()
+                lat, lng = ws_gps.get_new_location()
                 print(f'New coordinates: ({lat}, {lng})')
