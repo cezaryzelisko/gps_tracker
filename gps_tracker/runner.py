@@ -3,16 +3,21 @@ from argparse import ArgumentParser
 
 from gps_tracker.auth import Auth
 from gps_tracker.device import Device
-from gps_tracker.gps_locator import RandomGPSLocator
-
-STARTING_COORDS = (51.005, 21.001)
 
 
-def run_main_loop(interval):
+def main(get_gps_locator):
+    arg_parser = ArgumentParser()
+    arg_parser.add_argument('--interval', '-i', type=int, default=30, help='Number of seconds between each packet')
+    args = arg_parser.parse_args()
+
     auth = Auth()
-    device = Device('Random Device', auth)
-    gps_locator = RandomGPSLocator(device.id, auth, STARTING_COORDS)
+    device = Device('Test Device', auth)
+    gps_locator = get_gps_locator(auth, device)
 
+    run_main_loop(gps_locator, device, args.interval)
+
+
+def run_main_loop(gps_locator, device, interval):
     print(f"Device: #{device.id} - '{device.name}' started!")
 
     try:
@@ -31,11 +36,3 @@ def log(published_at_str, location, status_code, device_id):
     print(f'[POST] -> '
           f'{published_at_str}, lat: {location["lat"]:.3f}, lng: {location["lng"]:.3f}, device_id: {device_id} -> '
           f'{status_code}')
-
-
-if __name__ == '__main__':
-    arg_parser = ArgumentParser()
-    arg_parser.add_argument('--interval', '-i', type=int, default=30, help='Number of seconds between each packet')
-    args = arg_parser.parse_args()
-
-    run_main_loop(args.interval)

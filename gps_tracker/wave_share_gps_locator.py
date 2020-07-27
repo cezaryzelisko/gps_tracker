@@ -2,7 +2,6 @@ import time
 
 from RPi import GPIO
 from gps_tracker.gps_locator import GPSLocator
-from gps_tracker.serial_connection import SerialConnection
 from gps_tracker.wave_share_config import WaveShareGPS
 
 
@@ -85,13 +84,3 @@ class WaveShareGPSLocator(GPSLocator):
         datetime_str, lat, lng = gps_info_parts[2:5]
 
         return datetime_str, lat, lng
-
-
-# Note: this sample code will work only if you disable authentication in GPSLocator base class!
-if __name__ == '__main__':
-    with SerialConnection(WaveShareGPS.DEFAULT_DEVICE) as serial_conn:
-        with WaveShareGPSLocator(1, None, serial_conn) as ws_gps:
-            enabled = ws_gps.wait_for_gps()
-            if enabled:
-                lat, lng = ws_gps.get_new_location()
-                print(f'New coordinates: ({lat}, {lng})')
