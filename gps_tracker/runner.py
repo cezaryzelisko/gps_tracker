@@ -1,18 +1,11 @@
 import time
 from argparse import ArgumentParser
 
-from gps_tracker.auth import Auth
-from gps_tracker.device import Device
 
-
-def main(get_gps_locator):
+def main(gps_locator, device):
     arg_parser = ArgumentParser()
     arg_parser.add_argument('--interval', '-i', type=int, default=30, help='Number of seconds between each packet')
     args = arg_parser.parse_args()
-
-    auth = Auth()
-    device = Device('Test Device', auth)
-    gps_locator = get_gps_locator(auth, device)
 
     run_main_loop(gps_locator, device, args.interval)
 

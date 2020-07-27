@@ -6,7 +6,7 @@ from gps_tracker.utils.api_requests import post
 
 
 class GPSLocator:
-    def __init__(self, device_id, auth, starting_coords=(0, 0)):
+    def __init__(self, device_id, auth, starting_coords=(0.0, 0.0)):
         self.device_id = device_id
         self.headers = auth.get_authorization_header()
         self.last_known_location = self.format_last_known_location_dict(*starting_coords)

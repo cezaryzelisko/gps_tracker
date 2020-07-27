@@ -7,7 +7,7 @@ from gps_tracker.wave_share_config import WaveShareGPS
 
 class WaveShareGPSLocator(GPSLocator):
     def __init__(self, device_id, auth, serial_conn):
-        super().__init__(device_id, auth, (-1, -1))
+        super().__init__(device_id, auth, (-1.0, -1.0))
         self.serial_conn = serial_conn
 
     def __enter__(self):
@@ -71,16 +71,16 @@ class WaveShareGPSLocator(GPSLocator):
         if res_status:
             if ',,,,,,' in res_msg:
                 print('ERROR:\tGPS is not ready')
-                return self.format_last_known_location_dict(-1, -1)
+                return self.format_last_known_location_dict(-1.0, -1.0)
             datetime_str, lat, lng = self.parse_gps_information(res_msg)
             return self.format_last_known_location_dict(lat, lng)
         else:
             print(f'ERROR:\t{res_msg}')
-            return self.format_last_known_location_dict(-1, -1)
+            return self.format_last_known_location_dict(-1.0, -1.0)
 
     @staticmethod
     def parse_gps_information(information):
         gps_info_parts = information.split(',', 5)
         datetime_str, lat, lng = gps_info_parts[2:5]
 
-        return datetime_str, lat, lng
+        return datetime_str, float(lat), float(lng)
