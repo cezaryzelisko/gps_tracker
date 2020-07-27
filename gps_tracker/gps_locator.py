@@ -12,9 +12,9 @@ class GPSLocator:
         self.last_known_location = self.format_last_known_location_dict(*starting_coords)
 
     @staticmethod
-    def format_last_known_location_dict(lat, lng, published_at=datetime.datetime.now()):
+    def format_last_known_location_dict(lat, lng, published_at=None):
         return {
-            'published_at': published_at,
+            'published_at': published_at if published_at else datetime.datetime.now(),
             'lat': lat,
             'lng': lng
         }
